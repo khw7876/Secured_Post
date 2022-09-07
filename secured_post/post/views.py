@@ -14,12 +14,15 @@ from secured_post.post.models import Post
 # Create your views here.
 
 class PostView(APIView):
-
+    """
+    post의 CRUD를 담당하는 View
+    """
     def get(self, request):
         try :
             page = int(self.request.query_params.get("page"))
         except TypeError:
             page == 1
+        
         if get_post(page) == {}:
             return Response({"detail" : "아직 게시글이 존재하지 않습니다. 제일 먼저 만들어보세요!!"}, status=status.HTTP_200_OK)
         page_post_serializer = get_post(page)
