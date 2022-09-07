@@ -3,15 +3,20 @@ from rest_framework import status, exceptions
 from rest_framework.response import Response
 
 from post.Services.post_service import (
+    get_post,
     create_post,
     update_post,
-    check_is_password,
     delete_post,
+    check_is_password,
     )
 
 # Create your views here.
 
 class PostView(APIView):
+    def get(self, request):
+        page = int(self.request.query_params.get("page"))
+        page_post_serializer = get_post(page)
+        return Response(page_post_serializer, status=status.HTTP_200_OK)
 
     def post(self, request):
         create_post(request.data)

@@ -3,6 +3,11 @@ from django.contrib.auth.hashers import check_password
 from post.models import Post as PostModel
 from post.serializers import CreatePostSerializer, PostSerializer
 
+def get_post(page):
+    page_post = PostModel.objects.all()[:page*20]
+    page_post_serializer = PostSerializer(page_post, many=True).data
+    return page_post_serializer
+
 def create_post(create_data):
     post_serializer = CreatePostSerializer(data = create_data)
     post_serializer.is_valid(raise_exception=True)
