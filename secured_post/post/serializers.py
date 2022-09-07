@@ -5,7 +5,7 @@ from rest_framework import serializers
 from post.models import Post as PostModel
 
 
-class PostSerializer(serializers.ModelSerializer):
+class CreatePostSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         condition = all(x not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] for x in data["password"])
@@ -18,7 +18,14 @@ class PostSerializer(serializers.ModelSerializer):
         post = self.Meta.model(**validated_data)
         post.save()
         return post
-        
+
     class Meta:
         model = PostModel
         fields = "__all__"
+
+class PostSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PostModel
+        fields = "__all__"
+
