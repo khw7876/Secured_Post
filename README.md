@@ -78,3 +78,19 @@
 <br>
 
 ## 💻 트러블슈팅
+- 문제1
+    - User에서만 password 세팅을 하다보니 set_password 말고 어떻게 적용을 해야할지 몰랐음
+    - set_password와 유사한 make_password를 이용해 해쉬화에 성공
+    - But 같은 문자열이더라도 hash화가 되어있는 문자열과, 새로 해쉬한 문자는 다른값을 내뱉기에 체크에 어려움을 겪음
+- 해결1
+    - django의 내장함수인 check_password를 사용
+    - check_password (기본 문자열, 해쉬된 기본문자열)를 사용하여서 해쉬된 비밀번호의 일치 여부를 알게 되었음
+    
+- 문제2
+    - 게시물을 생성할 때에는 Serializer를 사용하여 진행함
+    - 비밀번호 valid 검증을 위한 validation 함수를 생성
+    - Create때는 정상작동을 하지만, Update와 Delete시에는 Validation 함수를 통과하지 못하는 문제 발생
+- 해결2
+    - Create에는 그대로 validaion이 적용된 Serializer를 사용
+    - Update와 Delete시에는 같은 모델을 사용하지만, Validation이 없는 새로운 Serializer를 만들어서 사용
+    - 같은 기능을 사용하지만, 비밀번호 정규식을 체크하냐 안하냐로 구분하여서 분리사용을 하였음
