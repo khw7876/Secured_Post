@@ -9,7 +9,7 @@ from post.Services.post_service import (
     delete_post,
     check_is_password,
     )
-from secured_post.post.models import Post
+from post.models import Post as PostModel
 
 # Create your views here.
 
@@ -42,7 +42,7 @@ class PostView(APIView):
                 return Response({"detail" : "게시글을 수정하였습니다."}, status=status.HTTP_200_OK)
             except exceptions.ValidationError:
                 return Response({"detail" : "형식을 벗어난 입력값이 존재합니다."}, status=status.HTTP_400_BAD_REQUEST)
-            except Post.DoesNotExist:
+            except PostModel.DoesNotExist:
                 return Response({"detail" : "게시물이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
         return Response({"detail" : "비밀번호가 일치하지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -51,7 +51,7 @@ class PostView(APIView):
             try:
                 delete_post(post_id)
                 return Response({ "detail" : "게시글이 삭제 되었습니다."}, status=status.HTTP_200_OK)
-            except Post.DoesNotExist:
+            except PostModel.DoesNotExist:
                 return Response({"detail" : "게시물이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
         return Response({"detail" : "비밀번호가 일치하지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
         

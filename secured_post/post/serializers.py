@@ -22,10 +22,13 @@ class CreatePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostModel
         fields = "__all__"
+        extra_kwargs = {"password": {"write_only": True}}
 
 class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PostModel
         fields = "__all__"
+
+        extra_kwargs = {"password": {"write_only": True}}
 
